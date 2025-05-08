@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andiniaulia3119.checklist.data.Item
 import com.andiniaulia3119.checklist.data.ItemRepository
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
 
@@ -14,13 +14,11 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
     val items: StateFlow<List<Item>> = _items
 
     init {
-        // Mengambil data item dari repository
         getItems()
     }
 
     private fun getItems() {
         viewModelScope.launch {
-            // Anda dapat menggantikan kode ini dengan logika dari repository
             _items.value = repository.getAllItems()
         }
     }
@@ -28,7 +26,14 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
     fun addItem(item: Item) {
         viewModelScope.launch {
             repository.insertItem(item)
-            getItems() // Update list setelah menambahkan item baru
+            getItems()
         }
     }
+
+    fun deleteItem(item: Item) {
+        viewModelScope.launch {
+            repository.deleteItem(item)
+        }
+    }
+
 }

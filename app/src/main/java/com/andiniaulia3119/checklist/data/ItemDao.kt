@@ -1,6 +1,7 @@
 package com.andiniaulia3119.checklist.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -11,4 +12,8 @@ interface ItemDao {
 
     @Query("SELECT * FROM items")
     suspend fun getAllItems(): List<Item>
+
+    @Delete
+    suspend fun delete(item: Item)
+
 }
