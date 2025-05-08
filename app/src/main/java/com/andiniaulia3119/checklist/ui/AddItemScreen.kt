@@ -61,9 +61,9 @@ fun AddItemScreen(onBackToList: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            // Logika untuk menambahkan item ke daftar
-            // Misalnya: viewModel.addItem(newItem)
-            onBackToList() // Kembali ke ItemListScreen setelah item ditambahkan
+            // Logika nambahin item ke daftar
+            // cth: viewModel.addItem(newItem)
+            onBackToList() // balik ke ItemListScreen kalo item udah ditambahkan
         }) {
             Text("Tambah Item")
         }
