@@ -1,6 +1,6 @@
 package com.andiniaulia3119.checklist.ui
 
-import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,17 +20,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.andiniaulia3119.checklist.ui.theme.CheckListTheme
+import com.andiniaulia3119.checklist.data.Item
 
 @Composable
-fun AddItemScreen(navController: NavController, onBackToList: () -> Unit) {
+fun AddItemScreen(navController: NavController, viewModel: ItemViewModel, onBackToList: () -> Unit) {
     var itemName by remember { mutableStateOf("") }
     var itemQuantity by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -63,21 +64,23 @@ fun AddItemScreen(navController: NavController, onBackToList: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            // Logika nambahin item ke daftar
-            // cth: viewModel.addItem(newItem)
-            onBackToList() // balik ke ItemListScreen kalo item udah ditambahkan
+            if (itemName.isBlank() || itemQuantity.isBlank()) {
+                Toast.makeText(context, "Nama dan Kuantitas tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                return@Button
+            }
+            if (itemQuantity.toIntOrNull() == null) {
+                Toast.makeText(context, "Kuantitas harus berupa angka", Toast.LENGTH_SHORT).show()
+                return@Button
+            }
+            val newItem = Item(name = itemName, quantity = itemQuantity)
+            viewModel.addItem(newItem)
+            onBackToList()
         }) {
             Text("Tambah Item")
         }
     }
 }
 
-@Preview(showBackground = true)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
-@Composable
-fun PreviewAddItemScreen() {
-    val navController = rememberNavController()
-    CheckListTheme {
-        AddItemScreen(navController = navController, onBackToList = {})
-    }
-}
+
+
+
