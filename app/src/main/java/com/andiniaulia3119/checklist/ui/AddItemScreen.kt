@@ -23,10 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.andiniaulia3119.checklist.ui.theme.CheckListTheme
 
 @Composable
-fun AddItemScreen(onBackToList: () -> Unit) {
+fun AddItemScreen(navController: NavController, onBackToList: () -> Unit) {
     var itemName by remember { mutableStateOf("") }
     var itemQuantity by remember { mutableStateOf("") }
 
@@ -74,7 +76,8 @@ fun AddItemScreen(onBackToList: () -> Unit) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PreviewAddItemScreen() {
+    val navController = rememberNavController()
     CheckListTheme {
-        AddItemScreen(onBackToList = {})
+        AddItemScreen(navController = navController, onBackToList = {})
     }
 }
