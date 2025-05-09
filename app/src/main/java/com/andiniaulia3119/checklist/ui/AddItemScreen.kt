@@ -21,10 +21,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.andiniaulia3119.checklist.data.Item
+import com.andiniaulia3119.checklist.ui.theme.customFontFamily
 
 @Composable
 fun AddItemScreen(navController: NavController,
@@ -78,7 +81,11 @@ fun AddItemScreen(navController: NavController,
             itemViewModel.addItem(newItem)
             onBackToList()
         }) {
-            Text("Tambah Item")
+            Text(
+                "Tambah Item",
+                fontFamily = customFontFamily,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

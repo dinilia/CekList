@@ -11,54 +11,33 @@ import androidx.compose.ui.unit.sp
 import com.andiniaulia3119.mobpro1.R
 
 val customFontFamily = FontFamily(
-    Font(R.font.ostrichrounded),
-    Font(R.font.ostrichrounded, weight = FontWeight.Bold)
+    Font(R.font.ostrichrounded, weight = FontWeight.ExtraBold)
 )
 
 val typography = Typography(
-    h1 = TextStyle(
+    headlineLarge = TextStyle(
         fontFamily = customFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 30.sp
     ),
-    h2 = TextStyle(
+    headlineMedium = TextStyle(
         fontFamily = customFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 24.sp
     ),
-    h3 = TextStyle(
+    headlineSmall = TextStyle(
         fontFamily = customFontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
-    ),
-    h4 = TextStyle(
-        fontFamily = customFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 18.sp
-    ),
-    h5 = TextStyle(
-        fontFamily = customFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 16.sp
     ),
-    h6 = TextStyle(
+    bodyMedium = TextStyle(
         fontFamily = customFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 14.sp
     ),
-    body1 = TextStyle(
+    bodySmall = TextStyle(
         fontFamily = customFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
-    ),
-    body2 = TextStyle(
-        fontFamily = customFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    ),
-    caption = TextStyle(
-        fontFamily = customFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 12.sp
     ),
 )

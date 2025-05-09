@@ -19,13 +19,15 @@ import com.andiniaulia3119.checklist.ui.ItemListScreen
 import com.andiniaulia3119.checklist.ui.ItemViewModel
 import com.andiniaulia3119.checklist.ui.ItemViewModelFactory
 import com.andiniaulia3119.checklist.ui.SplashScreen
+import com.andiniaulia3119.checklist.ui.theme.AppTheme
 
-// MainActivity.kt
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CekListApp()
+            AppTheme {
+                CekListApp()
+            }
         }
     }
 }
