@@ -36,4 +36,10 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
         }
     }
 
+    fun updateItem(item: Item) {
+        viewModelScope.launch {
+            repository.updateItem(item)
+            getItems()
+        }
+    }
 }

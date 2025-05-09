@@ -27,7 +27,9 @@ import androidx.navigation.NavController
 import com.andiniaulia3119.checklist.data.Item
 
 @Composable
-fun AddItemScreen(navController: NavController, viewModel: ItemViewModel, onBackToList: () -> Unit) {
+fun AddItemScreen(navController: NavController,
+                  itemViewModel: ItemViewModel,
+                  onBackToList: () -> Unit) {
     var itemName by remember { mutableStateOf("") }
     var itemQuantity by remember { mutableStateOf("") }
 
@@ -73,7 +75,7 @@ fun AddItemScreen(navController: NavController, viewModel: ItemViewModel, onBack
                 return@Button
             }
             val newItem = Item(name = itemName, quantity = itemQuantity)
-            viewModel.addItem(newItem)
+            itemViewModel.addItem(newItem)
             onBackToList()
         }) {
             Text("Tambah Item")

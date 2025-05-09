@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -12,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.andiniaulia3119.checklist.data.AppDatabase
 import com.andiniaulia3119.checklist.data.ItemRepository
 import com.andiniaulia3119.checklist.ui.AddItemScreen
+import com.andiniaulia3119.checklist.ui.EditItemScreen
 import com.andiniaulia3119.checklist.ui.ItemListScreen
 import com.andiniaulia3119.checklist.ui.ItemViewModel
 import com.andiniaulia3119.checklist.ui.ItemViewModelFactory
@@ -30,33 +33,41 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CekListApp() {
     val navController = rememberNavController()
-
-    // Inisialisasi ViewModel
+    val context = LocalContext.current
+    val database = AppDatabase.getDatabase(context)
+    val repository = ItemRepository(database.itemDao())
     val itemViewModel: ItemViewModel = viewModel(
-        factory = ItemViewModelFactory(ItemRepository(AppDatabase.getDatabase(LocalContext.current).itemDao()))
+        factory = ItemViewModelFactory(repository)
     )
 
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = "splash"  // Ganti startDestination menjadi "splash"
     ) {
         composable("splash") {
-            SplashScreen(navController)
+            SplashScreen(navController = navController)
         }
         composable("itemList") {
-            ItemListScreen(navController = navController, viewModel = itemViewModel)
+            ItemListScreen(navController, itemViewModel)
         }
         composable("addItem") {
-            AddItemScreen(
-                navController = navController,
-                viewModel = itemViewModel,
-                onBackToList = {
-                    navController.navigate("itemList") {
-                        popUpTo("addItem") { inclusive = true }
-                    }
-                }
-            )
+            AddItemScreen(navController, itemViewModel, onBackToList = {
+                navController.navigate("itemList")
+            })
+        }
+        composable("editItem/{itemId}") { backStackEntry ->
+            val itemId = backStackEntry.arguments?.getString("itemId")?.toIntOrNull()
+            val items by itemViewModel.items.collectAsState()
+            val item = items.find { it.id.toInt() == itemId }
+
+            if (item != null) {
+                EditItemScreen(
+                    navController = navController,
+                    itemViewModel = itemViewModel,
+                    item = item,
+                    onBackToList = { navController.navigate("itemList") }
+                )
+            }
         }
     }
 }
-

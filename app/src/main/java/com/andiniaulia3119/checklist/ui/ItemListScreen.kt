@@ -1,5 +1,6 @@
 package com.andiniaulia3119.checklist.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -51,8 +53,8 @@ import com.andiniaulia3119.mobpro1.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemListScreen(navController: NavController, viewModel: ItemViewModel) {
-    val items by viewModel.items.collectAsState()
+fun ItemListScreen(navController: NavController, itemViewModel: ItemViewModel) {
+    val items by itemViewModel.items.collectAsState()
     val context = LocalContext.current
 
     var isGridView by remember { mutableStateOf(false) }
@@ -103,6 +105,8 @@ fun ItemListScreen(navController: NavController, viewModel: ItemViewModel) {
                             ItemCard(item = item, onDelete = {
                                 selectedItem = item
                                 showDialog = true
+                            }, onEdit = {
+                                navController.navigate("editItem/${item.id}")
                             })
                         }
                     }
@@ -112,9 +116,14 @@ fun ItemListScreen(navController: NavController, viewModel: ItemViewModel) {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(items) { item ->
-                            ItemCard(item = item, onDelete = {
-                                selectedItem = item
-                                showDialog = true
+                            ItemCard(
+                                item = item,
+                                onDelete = {
+                                    selectedItem = item
+                                    showDialog = true
+                                },
+                                onEdit = {
+                                    navController.navigate("editItem/${item.id}")
                             })
                         }
                     }
@@ -128,7 +137,7 @@ fun ItemListScreen(navController: NavController, viewModel: ItemViewModel) {
                     text = { Text("Yakin ingin menghapus ${selectedItem?.name}'?") },
                     confirmButton = {
                         TextButton(onClick = {
-                            viewModel.deleteItem(selectedItem!!)
+                            itemViewModel.deleteItem(selectedItem!!)
                             showDialog = false
                         }) {
                             Text("Hapus")
@@ -145,13 +154,13 @@ fun ItemListScreen(navController: NavController, viewModel: ItemViewModel) {
     }
 }
 
-
 @Composable
-fun ItemCard(item: Item, onDelete: () -> Unit) {
+fun ItemCard(item: Item, onDelete: () -> Unit, onEdit: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onEdit() },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
