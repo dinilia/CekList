@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.andiniaulia3119.checklist.data.Item
+import com.andiniaulia3119.checklist.ui.theme.customFontFamily
 import com.andiniaulia3119.mobpro1.R
 
 
@@ -64,7 +65,8 @@ fun ItemListScreen(navController: NavController, itemViewModel: ItemViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("CekList") },
+                title = { Text("CekList", fontFamily = customFontFamily,
+                    fontWeight = FontWeight.Bold) },
                 actions = {
                     IconButton(onClick = { isGridView = !isGridView }) {
                         Icon(
@@ -89,6 +91,8 @@ fun ItemListScreen(navController: NavController, itemViewModel: ItemViewModel) {
             if (items.isEmpty()) {
                 Text(
                     text = "Belum ada data.",
+                    fontFamily = customFontFamily,
+                    fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
                         .fillMaxSize()
                         .wrapContentSize(Alignment.Center),
@@ -133,19 +137,23 @@ fun ItemListScreen(navController: NavController, itemViewModel: ItemViewModel) {
             if (showDialog && selectedItem != null) {
                 AlertDialog(
                     onDismissRequest = { showDialog = false },
-                    title = { Text("Konfirmasi Hapus") },
-                    text = { Text("Yakin ingin menghapus ${selectedItem?.name}'?") },
+                    title = { Text("Konfirmasi Hapus", fontFamily = customFontFamily,
+                        fontWeight = FontWeight.Medium) },
+                    text = { Text("Yakin ingin menghapus ${selectedItem?.name}'?", fontFamily = customFontFamily,
+                        fontWeight = FontWeight.Medium) },
                     confirmButton = {
                         TextButton(onClick = {
                             itemViewModel.deleteItem(selectedItem!!)
                             showDialog = false
                         }) {
-                            Text("Hapus")
+                            Text("Hapus", fontFamily = customFontFamily,
+                                fontWeight = FontWeight.Medium)
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { showDialog = false }) {
-                            Text("Batal")
+                            Text("Batal", fontFamily = customFontFamily,
+                                fontWeight = FontWeight.Medium)
                         }
                     }
                 )
@@ -166,13 +174,14 @@ fun ItemCard(item: Item, onDelete: () -> Unit, onEdit: () -> Unit) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = item.name,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontFamily = customFontFamily,
+                fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Kuantitas: ${item.quantity}",
-                style = MaterialTheme.typography.bodyMedium
+                fontFamily = customFontFamily,
+                fontWeight = FontWeight.Thin
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),

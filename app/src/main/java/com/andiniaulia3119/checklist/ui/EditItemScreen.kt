@@ -16,9 +16,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.andiniaulia3119.checklist.data.Item
+import com.andiniaulia3119.checklist.ui.theme.customFontFamily
 
 @Composable
 fun EditItemScreen(navController: NavController,
@@ -34,14 +36,16 @@ fun EditItemScreen(navController: NavController,
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nama Item") },
+            label = { Text("Nama Item", fontFamily = customFontFamily,
+                fontWeight = FontWeight.Thin) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = quantity,
             onValueChange = { quantity = it },
-            label = { Text("Kuantitas") },
+            label = { Text("Kuantitas", fontFamily = customFontFamily,
+                fontWeight = FontWeight.Thin) },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -53,7 +57,8 @@ fun EditItemScreen(navController: NavController,
             },
             modifier = Modifier.align(Alignment.End)
         ) {
-            Text("Simpan")
+            Text("Simpan", fontFamily = customFontFamily,
+                fontWeight = FontWeight.Bold)
         }
     }
 }

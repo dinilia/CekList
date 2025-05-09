@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -30,9 +31,11 @@ import com.andiniaulia3119.checklist.data.Item
 import com.andiniaulia3119.checklist.ui.theme.customFontFamily
 
 @Composable
-fun AddItemScreen(navController: NavController,
-                  itemViewModel: ItemViewModel,
-                  onBackToList: () -> Unit) {
+fun AddItemScreen(
+    navController: NavController,
+    itemViewModel: ItemViewModel,
+    onBackToList: () -> Unit
+) {
     var itemName by remember { mutableStateOf("") }
     var itemQuantity by remember { mutableStateOf("") }
 
@@ -42,31 +45,65 @@ fun AddItemScreen(navController: NavController,
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Tambah Item Belanjaan", style = MaterialTheme.typography.headlineMedium)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = itemName,
-            onValueChange = { itemName = it },
-            label = { Text("Nama Item") },
-            modifier = Modifier.fillMaxWidth()
+        Text(
+            "Tambah Item Belanjaan",
+            fontFamily = customFontFamily,
+            fontWeight = FontWeight.Medium
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
-            value = itemQuantity,
-            onValueChange = { itemQuantity = it },
-            label = { Text("Kuantitas") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-        )
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Nama Item",
+                    fontFamily = customFontFamily,
+                    fontWeight = FontWeight.Thin
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = itemName,
+                    onValueChange = { itemName = it },
+                    placeholder = { Text("Masukkan nama item", fontFamily = customFontFamily,
+                        fontWeight = FontWeight.Thin) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Kuantitas",
+                    fontFamily = customFontFamily,
+                    fontWeight = FontWeight.Thin
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                TextField(
+                    value = itemQuantity,
+                    onValueChange = { itemQuantity = it },
+                    placeholder = { Text("Masukkan kuantitas", fontFamily = customFontFamily,
+                        fontWeight = FontWeight.Thin) },
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = {
             if (itemName.isBlank() || itemQuantity.isBlank()) {
@@ -89,6 +126,8 @@ fun AddItemScreen(navController: NavController,
         }
     }
 }
+
+
 
 
 

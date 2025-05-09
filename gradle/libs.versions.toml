@@ -17,6 +17,8 @@ mediationTestSuite = "3.0.0"
 datastorePreferences = "1.1.4"
 runtimeLivedata = "1.8.1"
 adsMobileSdk = "0.15.1-alpha01"
+material3 = "1.2.0-alpha10"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

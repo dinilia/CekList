@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.andiniaulia3119.mobpro1.R
 
 val customFontFamily = FontFamily(
-    Font(R.font.ostrichrounded, weight = FontWeight.ExtraBold)
+    Font(R.font.paytone_one, weight = FontWeight.ExtraBold)
 )
 
 val typography = Typography(

@@ -33,8 +33,10 @@ class ItemViewModel(private val repository: ItemRepository) : ViewModel() {
     fun deleteItem(item: Item) {
         viewModelScope.launch {
             repository.deleteItem(item)
+            getItems()
         }
     }
+
 
     fun updateItem(item: Item) {
         viewModelScope.launch {
